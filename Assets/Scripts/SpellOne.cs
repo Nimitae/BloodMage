@@ -9,8 +9,6 @@ public class SpellOne : MonoBehaviour {
 	public float[] spellCost;
 	public float[] spellDamage;
 	public float[] cooldown;
-	public float[] spawnDistance;
-	public float[] freezeDelay;
 	public Transform[] spellOneTransforms;
 
 	private bool spellCasted;
@@ -65,32 +63,36 @@ public class SpellOne : MonoBehaviour {
 
 	public void castSingleTap()
 	{
-		singleTapSpellNextAvailableTime = Time.time + cooldown[singleTapIndex];
 		resLogic.spellReduceBlood(spellCost[singleTapIndex]);
 		float xPosition = transform.position.x;
+		Quaternion rotationQuart;
 		if (transform.rotation.y == 1){
-			xPosition -= spawnDistance[singleTapIndex];
+			rotationQuart = new Quaternion(0,0,1,0);
+			xPosition -= 0.7f;
 		} else {
-			xPosition += spawnDistance[singleTapIndex];
+			rotationQuart = new Quaternion(0,0,0,0);
+			xPosition += 0.7f;
 		}
-		Vector3 hammerLocation = new Vector3(xPosition, transform.position.y + 1,0);
-		Transform newProjectile =(Transform) Instantiate(spellOneTransforms[singleTapIndex],hammerLocation,Quaternion.identity);
+		Vector3 clawLocation = new Vector3(xPosition, transform.position.y,0);
+		Transform newProjectile =(Transform) Instantiate(spellOneTransforms[singleTapIndex],clawLocation,Quaternion.identity * rotationQuart);
 		newProjectile.GetComponent<SpellOneProjectile>().projectileDamage = spellDamage[singleTapIndex];
 		singleTapSpellNextAvailableTime = Time.time + cooldown[singleTapIndex];
 	}
 	
 	public void castDoubleTap()
 	{
-		doubleTapSpellNextAvailableTime = Time.time + cooldown[doubleTapIndex];
 		resLogic.spellReduceBlood(spellCost[doubleTapIndex]);
 		float xPosition = transform.position.x;
+		Quaternion rotationQuart;
 		if (transform.rotation.y == 1){
-			xPosition -= spawnDistance[doubleTapIndex];
+			rotationQuart = new Quaternion(0,0,1,0);
+			xPosition -= 0.7f;
 		} else {
-			xPosition += spawnDistance[doubleTapIndex];
+			rotationQuart = new Quaternion(0,0,0,0);
+			xPosition += 0.7f;
 		}
-		Vector3 hammerLocation = new Vector3(xPosition, transform.position.y + 1,0);
-		Transform newProjectile =(Transform) Instantiate(spellOneTransforms[doubleTapIndex],hammerLocation,Quaternion.identity);
+		Vector3 clawLocation = new Vector3(xPosition, transform.position.y,0);
+		Transform newProjectile =(Transform) Instantiate(spellOneTransforms[doubleTapIndex],clawLocation,Quaternion.identity * rotationQuart);
 		newProjectile.GetComponent<SpellOneProjectile>().projectileDamage = spellDamage[doubleTapIndex];
 		doubleTapSpellNextAvailableTime = Time.time + cooldown[doubleTapIndex];
 	}
