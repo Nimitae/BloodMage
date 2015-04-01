@@ -130,6 +130,7 @@
      <Compile Include="Assets\Scripts\SpellOneProjectile.cs" />
      <Compile Include="Assets\Scripts\WalkingEnemyAI.cs" />
      <Compile Include="Assets\Scripts\WalkingEnemyLogic.cs" />
+     <Compile Include="Assets\SkillTreeLogic.cs" />
      <Compile Include="Assets\SpellTwo.cs" />
      <Compile Include="Assets\SpellTwoProjectile.cs" />
      <None Include="Assets\AstarPathfindingProject\Editor\EditorAssets\Materials\Navmesh2.shader" />

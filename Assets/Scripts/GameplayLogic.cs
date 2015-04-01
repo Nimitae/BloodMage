@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 
 public class GameplayLogic : MonoBehaviour {
@@ -22,8 +23,14 @@ public class GameplayLogic : MonoBehaviour {
 	public int currentWave;
 	private float enemiesSpawned;
 	public float minimumSpawnTime;
-
 	private float nextPossibleSpawnTime;
+
+
+	private bool[] skillOneUnlocks;
+	public GameObject[] skillOnePanels;
+	private bool[] skillTwoUnlocks;
+	public GameObject[] skillTwoPanels;
+
 
 	// Use this for initialization
 	void Start () {
@@ -34,6 +41,7 @@ public class GameplayLogic : MonoBehaviour {
 		enemiesSpawned = 0;
 		nextPossibleSpawnTime = 0;
 		resLogic = GameObject.Find ("GameManager").GetComponent<ResourceLogic> ();
+		initialiseSkillTree ();
 	}
 
 	void Update() {
@@ -94,6 +102,7 @@ public class GameplayLogic : MonoBehaviour {
 			skillTreeOpen = false;
 			unpauseGame();
 		} else {
+			displaySkillTree();
 			skillTree.SetActive(true);
 			skillTreeOpen = true;
 			pauseGame();
@@ -113,10 +122,23 @@ public class GameplayLogic : MonoBehaviour {
 		}
 	}
 
-	public void spendGoldOnTier(int skillTier)
+	public void spendGoldOnSkillOneTier(int skillTier)
 	{
 		if (ResourceLogic.goldAmount >= skillTreeTierCosts [skillTier]) {
 			resLogic.spendGoldOnSkillTree(skillTreeTierCosts [skillTier]);
+			skillOneUnlocks[skillTier] = true;
+			updateSkillTree(skillOneUnlocks, skillOnePanels);
+			skillOnePanels[skillTier].SetActive(false);
+		}
+	}
+
+	public void spendGoldOnSkillTwoTier(int skillTier)
+	{
+		if (ResourceLogic.goldAmount >= skillTreeTierCosts [skillTier]) {
+			resLogic.spendGoldOnSkillTree(skillTreeTierCosts [skillTier]);
+			skillTwoUnlocks[skillTier] = true;
+			updateSkillTree(skillTwoUnlocks, skillTwoPanels);
+			skillTwoPanels[skillTier].SetActive(false);
 		}
 	}
 
@@ -125,5 +147,97 @@ public class GameplayLogic : MonoBehaviour {
 		if (ResourceLogic.goldAmount >= potionCost) {
 			resLogic.spendGoldOnBlood(potionCost, potionHealing);
 		}
+	}
+
+	void initialiseSkillTree()
+	{
+		skillOneUnlocks = new bool[7];
+		skillTwoUnlocks = new bool[7];
+		skillOneUnlocks [0] = true;
+		skillTwoUnlocks [0] = true;
+	}
+
+	private void displaySkillTree()
+	{
+		updateSkillTree (skillOneUnlocks, skillOnePanels);
+	}
+
+	private void updateSkillTree(bool[] skillUnlocksArray, GameObject[] skillPanelsArray)
+	{
+		bool[] activeButtons = new bool[7];
+		if (skillUnlocksArray [1]) {
+			skillPanelsArray [1].transform.Find("YesButton").gameObject.SetActive(false);
+			if (skillUnlocksArray[2]) {
+				skillPanelsArray [2].transform.Find("YesButton").gameObject.SetActive(false);
+				if (skillUnlocksArray[3]) {
+					skillPanelsArray [3].transform.Find("YesButton").gameObject.SetActive(false);
+					skillPanelsArray [5].transform.Find("YesButton").gameObject.SetActive(false);
+					skillPanelsArray [6].transform.Find("YesButton").gameObject.SetActive(false);
+					if (skillUnlocksArray[4]){
+						skillPanelsArray [4].transform.Find("YesButton").gameObject.SetActive(false);
+					} else {
+						skillPanelsArray [4].transform.Find("YesButton").gameObject.SetActive(true);
+						activeButtons[4] = true;
+					}
+				} else if (skillUnlocksArray[5]) {
+					skillPanelsArray [3].transform.Find("YesButton").gameObject.SetActive(false);
+					skillPanelsArray [4].transform.Find("YesButton").gameObject.SetActive(false);
+					skillPanelsArray [5].transform.Find("YesButton").gameObject.SetActive(false);
+					if (skillUnlocksArray[6]){
+						skillPanelsArray [6].transform.Find("YesButton").gameObject.SetActive(false);
+					} else {
+						skillPanelsArray [6].transform.Find("YesButton").gameObject.SetActive(true);
+						activeButtons[6] = true;
+					}
+				}else {
+					skillPanelsArray [3].transform.Find("YesButton").gameObject.SetActive(true);
+					activeButtons[3] = true;
+					skillPanelsArray [5].transform.Find("YesButton").gameObject.SetActive(true);
+					activeButtons[5] = true;
+					skillPanelsArray [4].transform.Find("YesButton").gameObject.SetActive(false);
+					skillPanelsArray [6].transform.Find("YesButton").gameObject.SetActive(false);
+				}
+			} else {
+				skillPanelsArray [2].transform.Find("YesButton").gameObject.SetActive(true);
+				activeButtons[2] = true;
+				skillPanelsArray [3].transform.Find("YesButton").gameObject.SetActive(false);
+				skillPanelsArray [4].transform.Find("YesButton").gameObject.SetActive(false);
+				skillPanelsArray [5].transform.Find("YesButton").gameObject.SetActive(false);
+				skillPanelsArray [6].transform.Find("YesButton").gameObject.SetActive(false);
+			}
+		} else {
+			skillPanelsArray [1].transform.Find("YesButton").gameObject.SetActive(true);
+			activeButtons[1] = true;
+			skillPanelsArray [2].transform.Find("YesButton").gameObject.SetActive(false);
+			skillPanelsArray [3].transform.Find("YesButton").gameObject.SetActive(false);
+			skillPanelsArray [4].transform.Find("YesButton").gameObject.SetActive(false);
+			skillPanelsArray [5].transform.Find("YesButton").gameObject.SetActive(false);
+			skillPanelsArray [6].transform.Find("YesButton").gameObject.SetActive(false);
+		}
+		for (int i = 0; i < 7; i++) {
+			if (activeButtons[i] && ResourceLogic.goldAmount < skillTreeTierCosts[i]){
+				skillPanelsArray [i].transform.Find("YesButton").gameObject.SetActive(false);
+			}
+		}
+	}
+
+	public void activateSkillOnePanel(int panelIndex)
+	{
+		skillOnePanels [panelIndex].SetActive (true);
+	}
+
+	public void deactivateSkillOnePanel(int panelIndex)
+	{
+		skillOnePanels [panelIndex].SetActive (false);
+	}
+
+	public void activateSkillTwoPanel(int panelIndex)
+	{
+		skillTwoPanels [panelIndex].SetActive (true);
+	}
+	
+	public void deactivateSkillTwoPanel(int panelIndex)
+	{
+		skillTwoPanels [panelIndex].SetActive (false);
 	}
 }

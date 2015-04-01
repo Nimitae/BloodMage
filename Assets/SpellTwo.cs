@@ -52,15 +52,16 @@ public class SpellTwo : MonoBehaviour {
 			spellCasted = true;
 		}
 	}
-	public void setSpellLevel(int mode, int level)
+	public void setSingleTapIndex(int level)
 	{
-		if (mode == 1) {
-			singleTapIndex = level;
-		} else {
-			doubleTapSpellNextAvailableTime = 0;
-			doubleTapIndex = level;
-		}
+		singleTapIndex = level;
 	}
+	
+	public void setDoubleTapIndex(int level)
+	{
+		doubleTapSpellNextAvailableTime = 0;
+		doubleTapIndex = level;
+	} 
 	
 	public void castSingleTap()
 	{print ("single");

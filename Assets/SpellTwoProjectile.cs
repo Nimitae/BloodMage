@@ -2,13 +2,13 @@
 using System.Collections;
 
 public class SpellTwoProjectile : MonoBehaviour {
-//	[HideInInspector]
+	[HideInInspector]
 	public float projectileDamage;
-//	[HideInInspector]
+	[HideInInspector]
 	public float projectileSpeed;
-//	[HideInInspector]
+	[HideInInspector]
 	public float penetrationLimit;
-//	[HideInInspector]
+	[HideInInspector]
 	public float projectileForce;
 
 	private Rigidbody2D rigid;
@@ -31,13 +31,15 @@ public class SpellTwoProjectile : MonoBehaviour {
 	void OnTriggerEnter2D(Collider2D col)
 	{
 		if (col.transform.tag == "Enemy") {
-			col.gameObject.GetComponent<IEnemy>().takeDamage(projectileDamage);
+			col.gameObject.GetComponent<IEnemy> ().takeDamage (projectileDamage);
 			enemiesHit++;
-			if (enemiesHit >= penetrationLimit){
+			if (enemiesHit >= penetrationLimit) {
 				Destroy (gameObject);
 			}
 		} else if (col.transform.tag == "Ground") {
 			Destroy (gameObject);
+		} else if (col.transform.tag == "Boundary") {
+			Destroy(gameObject);
 		}
 	}
 }

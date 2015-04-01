@@ -42,7 +42,7 @@ public class ResourceLogic : MonoBehaviour {
 	public void spendGoldOnSkillTree(float amount)
 	{
 		goldAmount -= amount;
-		print ("Spent " + goldAmount + " gold on skill tree!");
+		print ("Spent " + amount + " gold on skill tree!");
 		this.updateGoldText ();
 	}
 
