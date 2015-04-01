@@ -12,12 +12,17 @@ public class CharacterControl : MonoBehaviour {
 	public float timeInvulInSeconds = 1;
 	public GameObject gameManager;
 	public bool disableMovement;
+	private float activeSpeedMultiplier;
+	public bool speedIsIncreased;
+	public float timeDeactivateSpeed;
 
 	Rigidbody2D rigid;
 	private bool isGrounded = true;
 
 	// Use this for initialization
 	void Start () {
+		speedIsIncreased = false;
+		activeSpeedMultiplier = 1;
 		rigid = GetComponent<Rigidbody2D>();
 	}
 	
@@ -26,10 +31,10 @@ public class CharacterControl : MonoBehaviour {
 		float verticalVelocity = rigid.velocity.y;
 		if (Input.GetKey (moveLeft)) {
 			transform.localEulerAngles = new Vector3(0f,180f,0f);
-			rigid.velocity = new Vector2 (-speed, verticalVelocity);
+			rigid.velocity = new Vector2 (-speed*activeSpeedMultiplier, verticalVelocity);
 		} else if (Input.GetKey (moveRight)) {
 			transform.localEulerAngles = new Vector3(0f,0f,0f);
-			rigid.velocity = new Vector2 (speed, verticalVelocity);
+			rigid.velocity = new Vector2 (speed*activeSpeedMultiplier, verticalVelocity);
 		} else {
 			rigid.velocity = new Vector2 (0, verticalVelocity);
 		}
@@ -37,6 +42,11 @@ public class CharacterControl : MonoBehaviour {
 		if (Input.GetKey (jump) && isGrounded) {
 			rigid.AddForce(new Vector2(0, jumpForce));
 			isGrounded = false;
+		}
+
+		if (speedIsIncreased && Time.time > timeDeactivateSpeed) {
+			speedIsIncreased = false;
+			activeSpeedMultiplier = 1;
 		}
 	}
 
@@ -55,6 +65,13 @@ public class CharacterControl : MonoBehaviour {
 		if (col.transform.tag == "Ground") {
 			isGrounded = false;
 		}
+	}
+
+	public void increaseMoveSpeedForDuration(float multiplier, float duration)
+	{
+		speedIsIncreased = true;
+		timeDeactivateSpeed = Time.time + duration;
+		activeSpeedMultiplier *= multiplier;
 	}
 
 }

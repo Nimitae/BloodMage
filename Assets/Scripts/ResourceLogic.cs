@@ -13,7 +13,8 @@ public class ResourceLogic : MonoBehaviour {
 	public Transform healthbar;
 	public Transform goldValue;
 
-	private float timeInvulOver;
+	[HideInInspector]
+	public float timeInvulOver;
 	private CharacterControl charControlScript;
 	private float invulDuration;
 	private Image healthbarImage;

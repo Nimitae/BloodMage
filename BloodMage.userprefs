@@ -1,13 +1,13 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\QWERSpell.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\SpellOne.cs">
     <Files>
-      <File FileName="Assets\Scripts\WalkingEnemyLogic.cs" Line="31" Column="1" />
-      <File FileName="Assets\Scripts\GameplayLogic.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\Interfaces.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\FlyingEnemyAI.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\ResourceLogic.cs" Line="57" Column="26" />
-      <File FileName="Assets\Scripts\QWERSpell.cs" Line="29" Column="5" />
+      <File FileName="Assets\Scripts\QWERSpell.cs" Line="49" Column="14" />
+      <File FileName="Assets\SpellTwo.cs" Line="60" Column="4" />
+      <File FileName="Assets\SpellTwoProjectile.cs" Line="23" Column="2" />
+      <File FileName="Assets\Scripts\SpellOneProjectile.cs" Line="5" Column="1" />
+      <File FileName="Assets\Scripts\WalkingEnemyLogic.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\SpellOne.cs" Line="25" Column="22" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
