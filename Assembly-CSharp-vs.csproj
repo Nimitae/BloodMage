@@ -133,6 +133,7 @@
      <Compile Include="Assets\Scripts\WalkingEnemyAI.cs" />
      <Compile Include="Assets\Scripts\WalkingEnemyLogic.cs" />
      <Compile Include="Assets\ShockwaveProjectile.cs" />
+     <Compile Include="Assets\SpellOneBonusHit.cs" />
      <Compile Include="Assets\SpellOneShockwave.cs" />
      <None Include="Assets\AstarPathfindingProject\Editor\EditorAssets\Materials\Navmesh2.shader" />
      <None Include="Assets\AstarPathfindingProject\Plugins\DotNetZip\License.txt" />

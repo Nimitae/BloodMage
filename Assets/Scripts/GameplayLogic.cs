@@ -3,7 +3,7 @@ using UnityEngine.UI;
 using System.Collections;
 
 public class GameplayLogic : MonoBehaviour {
-
+	public KeyCode skillTreeKey;
 	public bool gamePaused;
 	public bool skillTreeOpen;
 	public float[] skillTreeTierCosts;
@@ -53,6 +53,10 @@ public class GameplayLogic : MonoBehaviour {
 			currentWave++;
 			nextPossibleSpawnTime = 0;
 			enemiesSpawned = 0;
+		}
+
+		if (Input.GetKeyUp(skillTreeKey)){
+			skillTreeButtonPressed();
 		}
 	}
 
