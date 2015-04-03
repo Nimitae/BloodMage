@@ -164,6 +164,7 @@ public class GameplayLogic : MonoBehaviour {
 	private void displaySkillTree()
 	{
 		updateSkillTree (skillOneUnlocks, skillOnePanels);
+		updateSkillTree (skillTwoUnlocks, skillTwoPanels);
 	}
 
 	private void updateSkillTree(bool[] skillUnlocksArray, GameObject[] skillPanelsArray)
