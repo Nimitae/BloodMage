@@ -7,13 +7,19 @@ public class WalkingEnemyLogic : MonoBehaviour, IEnemy {
 	public float damage;
 	public float invulDuration;
 	public float goldOnKill;
+	public float potionDropChance;
+	public Sprite[] enemySprites;
 
+	private int currentSprite;
+	private SpriteRenderer spriteRend;
 	private ResourceLogic resLogic;
 	private GameplayLogic gameplayLogic;
 	private float vulnerableTime;
 
 	void Start()
 	{
+		currentSprite = 0;
+		spriteRend = transform.GetComponent<SpriteRenderer> ();
 		resLogic = GameObject.Find ("GameManager").GetComponent<ResourceLogic> ();
 		gameplayLogic = GameObject.Find ("GameManager").GetComponent<GameplayLogic> ();
 		vulnerableTime = 0;
@@ -23,8 +29,17 @@ public class WalkingEnemyLogic : MonoBehaviour, IEnemy {
 	{
 		if (health <= 0) {
 			resLogic.gainGoldFromMonsterKill(goldOnKill);
+			int potionRoll = Random.Range (0, 100);
+			if (potionRoll < potionDropChance){
+				resLogic.dropPotion(new Vector3(transform.position.x, transform.position.y, 0));
+			}
 			gameplayLogic.enemyDeath();
 			Destroy (gameObject);
+		}
+
+		if (Time.time > vulnerableTime && currentSprite == 1) {
+			spriteRend.sprite= enemySprites[0];
+			currentSprite = 0;
 		}
 	}
 
@@ -32,6 +47,8 @@ public class WalkingEnemyLogic : MonoBehaviour, IEnemy {
 	{
 		if (Time.time > vulnerableTime) {
 			health -= damageReceived;
+			spriteRend.sprite = enemySprites[1];
+				currentSprite = 1;
 			vulnerableTime = Time.time + invulDuration;
 		}
 	}

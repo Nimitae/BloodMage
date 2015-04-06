@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 
 public class QWERSpell : MonoBehaviour {
@@ -11,7 +12,10 @@ public class QWERSpell : MonoBehaviour {
 	public float secondInvulDuration;
 	public float fourthSpeedIncrease;
 	public float fourthSpeedDuration;
+	public float firstSkillKillRequirement;
 
+	public static float enemiesKilledSinceLastSpell;
+	private Image cooldownImage;
 	private float nextAvailableSpellTime;
 	private ResourceLogic resLogic;
 	private CharacterControl charControl;
@@ -21,12 +25,13 @@ public class QWERSpell : MonoBehaviour {
 		nextAvailableSpellTime = 0;
 		resLogic = GameObject.Find ("GameManager").GetComponent<ResourceLogic> ();
 		charControl = GameObject.Find ("character").GetComponent<CharacterControl> ();
+		cooldownImage = GameObject.Find ("LifeTapCooldown").GetComponent<Image> ();
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		if (Time.time >= nextAvailableSpellTime) {
-			if (Input.GetKey(firstSpell)){
+			if (Input.GetKey(firstSpell) && enemiesKilledSinceLastSpell >= firstSkillKillRequirement){
 				executeFirstSpell();
 			} else if (Input.GetKey(secondSpell)){
 				executeSecondSpell();
@@ -36,11 +41,21 @@ public class QWERSpell : MonoBehaviour {
 				executeFourthSpell();
 			}
 		}
+
+		if (enemiesKilledSinceLastSpell < firstSkillKillRequirement) {
+			cooldownImage.fillAmount = 1;
+
+		} else if (Time.time < nextAvailableSpellTime) {
+			cooldownImage.fillAmount = (nextAvailableSpellTime - Time.time) / sharedSpellCooldown;
+		} else {
+			cooldownImage.fillAmount = 0;
+		}
 	}
 
 	public void executeFirstSpell(){
 		resLogic.spendGoldOnBlood(0, firstFlatBloodGain);
 		nextAvailableSpellTime = Time.time + sharedSpellCooldown;
+		enemiesKilledSinceLastSpell = 0;
 	}
 
 	public void executeSecondSpell()

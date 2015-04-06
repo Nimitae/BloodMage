@@ -10,8 +10,7 @@ public class GameplayLogic : MonoBehaviour {
 	public GameObject skillTree;
 	public bool shopOpen;
 	public GameObject shopObject;
-	public float potionCost;
-	public float potionHealing;
+
 	private ResourceLogic resLogic;
 
 	public Transform player;
@@ -73,6 +72,7 @@ public class GameplayLogic : MonoBehaviour {
 
 	public void enemyDeath(){
 		currentAliveEnemies--;
+		QWERSpell.enemiesKilledSinceLastSpell++;
 	}
 
 	public void togglePauseGame()
@@ -143,13 +143,6 @@ public class GameplayLogic : MonoBehaviour {
 			skillTwoUnlocks[skillTier] = true;
 			updateSkillTree(skillTwoUnlocks, skillTwoPanels);
 			skillTwoPanels[skillTier].SetActive(false);
-		}
-	}
-
-	public void purchasePotion()
-	{
-		if (ResourceLogic.goldAmount >= potionCost) {
-			resLogic.spendGoldOnBlood(potionCost, potionHealing);
 		}
 	}
 

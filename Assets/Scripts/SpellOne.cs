@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 
 public class SpellOne : MonoBehaviour {
@@ -11,6 +12,7 @@ public class SpellOne : MonoBehaviour {
 	public float[] cooldown;
 	public Transform[] spellOneTransforms;
 
+	private Image cooldownImage;
 	private bool spellCasted;
 	private float timeOfLastTap;
 	private ResourceLogic resLogic;
@@ -24,6 +26,7 @@ public class SpellOne : MonoBehaviour {
 		doubleTapSpellNextAvailableTime = 999999999;
 		spellCasted = true;
 		resLogic = GameObject.Find ("GameManager").GetComponent<ResourceLogic> ();
+		cooldownImage = GameObject.Find ("MeleeCooldown").GetComponent<Image> ();
 	}
 	
 	// Update is called once per frame
@@ -47,6 +50,10 @@ public class SpellOne : MonoBehaviour {
 
 			}
 			spellCasted = true;
+		}
+
+		if (Time.time < singleTapSpellNextAvailableTime) {
+			cooldownImage.fillAmount = (singleTapSpellNextAvailableTime-Time.time)/cooldown[singleTapIndex];
 		}
 	}
 

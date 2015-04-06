@@ -12,7 +12,7 @@ public class SpellOneProjectile : MonoBehaviour {
 
 	void Start()
 	{
-		projectileDuration = 0.25f;
+		projectileDuration = 0.2f;
 		projectileDestroyTime = Time.time + projectileDuration;
 	}
 

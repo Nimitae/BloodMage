@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 
 public class SpellTwo : MonoBehaviour {
@@ -13,7 +14,8 @@ public class SpellTwo : MonoBehaviour {
 	public float[] projectileForce;
 	public float[] penetrationLimit;
 	public Transform[] spellTwoTransform;
-	
+
+	private Image cooldownImage;
 	private bool spellCasted;
 	private float timeOfLastTap;
 	private ResourceLogic resLogic;
@@ -27,6 +29,7 @@ public class SpellTwo : MonoBehaviour {
 		doubleTapSpellNextAvailableTime = 999999999;
 		spellCasted = true;
 		resLogic = GameObject.Find ("GameManager").GetComponent<ResourceLogic> ();
+		cooldownImage = GameObject.Find ("RangedCooldown").GetComponent<Image> ();
 	}
 	
 	// Update is called once per frame
@@ -50,6 +53,10 @@ public class SpellTwo : MonoBehaviour {
 				
 			}
 			spellCasted = true;
+		}
+
+		if (Time.time < singleTapSpellNextAvailableTime) {
+			cooldownImage.fillAmount = (singleTapSpellNextAvailableTime-Time.time)/cooldown[singleTapIndex];
 		}
 	}
 	public void setSingleTapIndex(int level)

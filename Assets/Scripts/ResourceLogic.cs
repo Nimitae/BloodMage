@@ -5,13 +5,18 @@ using UnityEngine.UI;
 public class ResourceLogic : MonoBehaviour {
 	public static float bloodAmount;
 	public static float goldAmount;
+	public static float potionsAmount;
 
 	public float initialBlood;
 	public float maximumBlood;
 	public float initialGold;
+	public float initialPotions;
 	public Transform player;
 	public Transform healthbar;
 	public Transform goldValue;
+	public float potionCost;
+	public float potionHealing;
+	public Transform potionTransform;
 
 	[HideInInspector]
 	public float timeInvulOver;
@@ -19,6 +24,7 @@ public class ResourceLogic : MonoBehaviour {
 	private float invulDuration;
 	private Image healthbarImage;
 	private Text goldText;
+	private Text potionsText;
 		
 	public void monsterDealDamage(float amount)
 	{
@@ -68,6 +74,7 @@ public class ResourceLogic : MonoBehaviour {
 	{
 		bloodAmount = initialBlood;
 		goldAmount = initialGold;
+		potionsAmount = initialPotions;
 		charControlScript = player.GetComponent<CharacterControl> ();
 		invulDuration = charControlScript.timeInvulInSeconds;
 		timeInvulOver = 0;
@@ -81,7 +88,7 @@ public class ResourceLogic : MonoBehaviour {
 	{
 		if (bloodAmount <= 0) {
 			Debug.Log ("Game over, you have died!");
-			Destroy(player.gameObject);
+			Application.LoadLevel(1);
 		}
 	}
 
@@ -94,4 +101,16 @@ public class ResourceLogic : MonoBehaviour {
 	{
 		goldText.text = "" + goldAmount;
 	}
+
+	public void dropPotion(Vector3 potionLocation)
+	{
+		Instantiate (potionTransform, potionLocation, Quaternion.identity);
+	}
+
+	public static void pickupPotion()
+	{
+		potionsAmount++;
+		print ("Picked up a potion!");
+	}
+
 }
