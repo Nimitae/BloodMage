@@ -8,21 +8,23 @@ public class WalkingEnemyLogic : MonoBehaviour, IEnemy {
 	public float invulDuration;
 	public float goldOnKill;
 	public float potionDropChance;
-	public Sprite[] enemySprites;
+	public float flinchDuration;
 
-	private int currentSprite;
-	private SpriteRenderer spriteRend;
+	private float flinchEndTime;
+	private bool isFlinching;
 	private ResourceLogic resLogic;
 	private GameplayLogic gameplayLogic;
 	private float vulnerableTime;
+	private Animator animator;
 
 	void Start()
 	{
-		currentSprite = 0;
-		spriteRend = transform.GetComponent<SpriteRenderer> ();
 		resLogic = GameObject.Find ("GameManager").GetComponent<ResourceLogic> ();
 		gameplayLogic = GameObject.Find ("GameManager").GetComponent<GameplayLogic> ();
+		animator = GetComponent<Animator> ();
 		vulnerableTime = 0;
+		isFlinching = false;
+		flinchEndTime = 0;
 	}
 	
 	void Update()
@@ -37,9 +39,9 @@ public class WalkingEnemyLogic : MonoBehaviour, IEnemy {
 			Destroy (gameObject);
 		}
 
-		if (Time.time > vulnerableTime && currentSprite == 1) {
-			spriteRend.sprite= enemySprites[0];
-			currentSprite = 0;
+		if (Time.time > flinchEndTime && isFlinching) {
+			animator.SetBool("monsterFlinch", false);
+			isFlinching = false;
 		}
 	}
 
@@ -47,9 +49,10 @@ public class WalkingEnemyLogic : MonoBehaviour, IEnemy {
 	{
 		if (Time.time > vulnerableTime) {
 			health -= damageReceived;
-			spriteRend.sprite = enemySprites[1];
-				currentSprite = 1;
 			vulnerableTime = Time.time + invulDuration;
+			animator.SetBool("monsterFlinch", true);
+			isFlinching = true;
+			flinchEndTime = Time.time+flinchDuration;
 		}
 	}
 

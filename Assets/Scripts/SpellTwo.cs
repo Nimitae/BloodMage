@@ -92,9 +92,10 @@ public class SpellTwo : MonoBehaviour {
 			rotationQuart = new Quaternion (0, 0, 1, 0);
 			xPosition -= 0.2f;
 		} else {
-			rotationQuart = new Quaternion (0, 0, 0, 0);
+			rotationQuart = Quaternion.identity;
 			xPosition += 0.2f;
 		}
+
 		if (index <= 4) {
 			Vector3 projectilePosition = new Vector3 (xPosition, transform.position.y + 0.1f, 0);
 			Transform newProjectile = (Transform)Instantiate (spellTwoTransform [index], projectilePosition, Quaternion.identity * rotationQuart);
