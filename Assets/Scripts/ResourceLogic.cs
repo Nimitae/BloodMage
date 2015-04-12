@@ -6,6 +6,7 @@ public class ResourceLogic : MonoBehaviour {
 	public static float bloodAmount;
 	public static float goldAmount;
 	public static float potionsAmount;
+	public static float storePotionStock;
 
 	public float initialBlood;
 	public float maximumBlood;
@@ -14,9 +15,14 @@ public class ResourceLogic : MonoBehaviour {
 	public Transform player;
 	public Transform healthbar;
 	public Transform goldValue;
-	public float potionCost;
+	public float potionBaseCost;
+	public float potionExponentialDecay;
 	public float potionHealing;
+	public float potionIncreaseByWave;
 	public Transform potionTransform;
+	public Transform playerPotionAmount;
+	public Transform storePotionAmount;
+	public Transform exchangeRate;
 
 	[HideInInspector]
 	public float timeInvulOver;
@@ -25,6 +31,8 @@ public class ResourceLogic : MonoBehaviour {
 	private Image healthbarImage;
 	private Text goldText;
 	private Text potionsText;
+	private Text storePotionText;
+	private Text exchangeRateText;
 		
 	public void monsterDealDamage(float amount)
 	{
@@ -72,6 +80,7 @@ public class ResourceLogic : MonoBehaviour {
 
 	void Start()
 	{
+		storePotionStock = 2;
 		bloodAmount = initialBlood;
 		goldAmount = initialGold;
 		potionsAmount = initialPotions;
@@ -80,8 +89,12 @@ public class ResourceLogic : MonoBehaviour {
 		timeInvulOver = 0;
 		healthbarImage = healthbar.GetComponent<Image> ();
 		goldText = goldValue.GetComponent<Text> ();
-		this.updateHealthbar();
-		this.updateGoldText ();
+		potionsText = playerPotionAmount.GetComponent<Text> ();
+		exchangeRateText = exchangeRate.GetComponent<Text> ();
+		storePotionText = storePotionAmount.GetComponent<Text> ();
+		updateHealthbar();
+		updateGoldText ();
+		updatePotionStore ();
 	}
 
 	void Update()
@@ -110,7 +123,67 @@ public class ResourceLogic : MonoBehaviour {
 	public static void pickupPotion()
 	{
 		potionsAmount++;
-		print ("Picked up a potion!");
+		ResourceLogic resLogic = GameObject.Find ("GameManager").GetComponent<ResourceLogic> ();
+		resLogic.updatePotionStore ();
+	}
+
+	public void increaseStorePotionStock(float amount)
+	{
+		storePotionStock+= amount;
+		updatePotionStore ();
+	}
+
+	public void increasePotionStockByWave()
+	{
+		increaseStorePotionStock (potionIncreaseByWave);
+		updatePotionStore ();
+	}
+
+	public float getCurrentPotionPrice()
+	{
+		//return Mathf.Round(potionBaseCost * Mathf.Exp(-1 * potionExponentialDecay * storePotionStock));
+		return potionBaseCost;
+	}
+
+	public void updatePotionStore()
+	{
+		potionsText.text = "x " + potionsAmount;
+		storePotionText.text = storePotionStock + " stock!";
+		exchangeRateText.text = "= " + getCurrentPotionPrice();
+	}
+
+	public void usePotion()
+	{
+		if (potionsAmount > 0) {
+			bloodAmount += potionHealing;
+			updateHealthbar ();
+			potionsAmount --;
+			updatePotionStore ();
+		}
+	}
+
+	public void buyPotionFromShop()
+	{
+		float currentPrice = getCurrentPotionPrice ();
+		if (goldAmount >= currentPrice && storePotionStock > 0) {
+			storePotionStock -= 1;
+			potionsAmount += 1;
+			goldAmount -= currentPrice;
+			updatePotionStore ();
+			updateGoldText();
+		}
+	}
+
+	public void sellPotionToShop()
+	{
+		float currentPrice = getCurrentPotionPrice ();
+		if (potionsAmount > 0) {
+			storePotionStock += 1;
+			potionsAmount -= 1;
+			goldAmount += currentPrice;
+			updatePotionStore ();
+			updateGoldText ();
+		}
 	}
 
 }

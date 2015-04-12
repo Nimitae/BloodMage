@@ -1,15 +1,8 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\FlyingEnemyLogic.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\RangedEnemyAI.cs">
     <Files>
-      <File FileName="Assets\Scripts\SpellOne.cs" Line="46" Column="33" />
-      <File FileName="Assets\Scripts\ResourceLogic.cs" Line="34" Column="1" />
-      <File FileName="Assets\Scripts\GameplayLogic.cs" Line="1" Column="1" />
-      <File FileName="Assets\splashScreen.cs" Line="43" Column="17" />
-      <File FileName="Assets\mainMenuScript.cs" Line="14" Column="3" />
-      <File FileName="Assets\instructionsLogic.cs" Line="8" Column="36" />
-      <File FileName="Assets\Scripts\WalkingEnemyLogic.cs" Line="50" Column="2" />
-      <File FileName="Assets\Scripts\FlyingEnemyLogic.cs" Line="52" Column="3" />
+      <File FileName="Assets\RangedEnemyAI.cs" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
