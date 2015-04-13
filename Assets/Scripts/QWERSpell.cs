@@ -20,12 +20,17 @@ public class QWERSpell : MonoBehaviour {
 	private float nextAvailableSpellTime;
 	private ResourceLogic resLogic;
 	private CharacterControl charControl;
+	private Animator animator;
+	private bool lifeTapActive;
+	private float lifeTapDeactivateTime;
 
 	public GameObject lifeTapCounter;
 	private Text lifeTapCounterText;
 
 	// Use this for initialization
 	void Start () {
+		lifeTapActive = false;
+		animator = GetComponent<Animator> ();
 		nextAvailableSpellTime = 0;
 		lifeTapCounterText = lifeTapCounter.GetComponent<Text> ();
 		resLogic = GameObject.Find ("GameManager").GetComponent<ResourceLogic> ();
@@ -35,6 +40,11 @@ public class QWERSpell : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+		if (lifeTapActive && Time.time > lifeTapDeactivateTime) {
+			lifeTapActive = false;
+			animator.SetBool ("castedLifeTap", false);
+		}
+
 		if (Time.time >= nextAvailableSpellTime) {
 			if (Input.GetKey(firstSpell) && enemiesKilledSinceLastSpell >= firstSkillKillRequirement){
 				executeFirstSpell();
@@ -68,6 +78,9 @@ public class QWERSpell : MonoBehaviour {
 		nextAvailableSpellTime = Time.time + sharedSpellCooldown;
 		QWERSpell.enemiesKilledSinceLastSpell = 0;
 		updateLifeTapCounter ();
+		animator.SetBool ("castedLifeTap", true);
+		lifeTapActive = true;
+		lifeTapDeactivateTime = Time.time + 0.3f;
 	}
 
 	public void executeSecondSpell()

@@ -88,7 +88,7 @@ public class SpellTwo : MonoBehaviour {
 		float xPosition = transform.position.x;
 		Quaternion rotationQuart;
 		if (transform.rotation.y == 1) {
-			rotationQuart = new Quaternion (0, 0, 1, 0);
+			rotationQuart = new Quaternion (0, 1, 0, 0);
 			xPosition -= 0.2f;
 		} else {
 			rotationQuart = Quaternion.identity;

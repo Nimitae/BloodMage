@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: b58ac3f926e966143a8fbbc7501c7c99
-timeCreated: 1427882442
+timeCreated: 1428917163
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -59,17 +59,17 @@ TextureImporter:
         width: 380
         height: 477
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: player-idle_1
       rect:
         serializedVersion: 2
-        x: 601
-        y: 130
+        x: 606
+        y: 133
         width: 407
         height: 464
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
   spritePackingTag: 
   userData: 

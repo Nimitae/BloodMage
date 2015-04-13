@@ -1,11 +1,9 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\SpellTwo.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\SpellOne.cs">
     <Files>
-      <File FileName="Assets\Scripts\GameplayLogic.cs" Line="109" Column="27" />
-      <File FileName="Assets\Scripts\QWERSpell.cs" Line="97" Column="1" />
-      <File FileName="Assets\rangedEnemyAttack.cs" Line="29" Column="1" />
-      <File FileName="Assets\Scripts\SpellTwo.cs" Line="125" Column="53" />
+      <File FileName="Assets\Scripts\ResourceLogic.cs" Line="109" Column="36" />
+      <File FileName="Assets\Scripts\SpellOne.cs" Line="26" Column="34" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

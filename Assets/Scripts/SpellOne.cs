@@ -74,7 +74,7 @@ public class SpellOne : MonoBehaviour {
 		float xPosition = transform.position.x;
 		Quaternion rotationQuart;
 		if (transform.rotation.y == 1){
-			rotationQuart = new Quaternion(0,0,1,0);
+			rotationQuart = new Quaternion(0,1,0,0);
 			xPosition -= 0.7f;
 		} else {
 			rotationQuart = new Quaternion(0,0,0,0);
@@ -92,7 +92,7 @@ public class SpellOne : MonoBehaviour {
 		float xPosition = transform.position.x;
 		Quaternion rotationQuart;
 		if (transform.rotation.y == 1){
-			rotationQuart = new Quaternion(0,0,1,0);
+			rotationQuart = new Quaternion(0,1,0,0);
 			xPosition -= 0.7f;
 		} else {
 			rotationQuart = new Quaternion(0,0,0,0);

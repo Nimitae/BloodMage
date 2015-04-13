@@ -141,6 +141,7 @@
      <Compile Include="Assets\Scripts\instructionsLogic.cs" />
      <Compile Include="Assets\Scripts\mainMenuScript.cs" />
      <Compile Include="Assets\Scripts\splashScreen.cs" />
+     <Compile Include="Assets\gameOverLogic.cs" />
      <Compile Include="Assets\rangedEnemyAttack.cs" />
      <None Include="Assets\AstarPathfindingProject\Editor\EditorAssets\Materials\Navmesh2.shader" />
      <None Include="Assets\AstarPathfindingProject\Plugins\DotNetZip\License.txt" />

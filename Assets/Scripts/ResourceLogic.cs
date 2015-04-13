@@ -15,6 +15,7 @@ public class ResourceLogic : MonoBehaviour {
 	public Transform player;
 	public Transform healthbar;
 	public Transform goldValue;
+	public KeyCode potionHotkey;
 	public float potionBaseCost;
 	public float potionExponentialDecay;
 	public float potionHealing;
@@ -22,7 +23,9 @@ public class ResourceLogic : MonoBehaviour {
 	public Transform potionTransform;
 	public Transform playerPotionAmount;
 	public Transform storePotionAmount;
-	public Transform exchangeRate;
+	public Transform potionUIAmount;
+	public Transform buyRate;
+	public Transform sellRate;
 
 	[HideInInspector]
 	public float timeInvulOver;
@@ -32,7 +35,13 @@ public class ResourceLogic : MonoBehaviour {
 	private Text goldText;
 	private Text potionsText;
 	private Text storePotionText;
-	private Text exchangeRateText;
+	private Text buyRateText;
+	private Text sellRateText;
+	private Text potionUIAmountText;
+	private Animator charAnimator;
+	private bool playerDead;
+	private float timeToMoveOn;
+	private Image potionDisabled;
 		
 	public void monsterDealDamage(float amount)
 	{
@@ -80,18 +89,24 @@ public class ResourceLogic : MonoBehaviour {
 
 	void Start()
 	{
+		timeToMoveOn = 999999999999;
+		playerDead = false;
 		storePotionStock = 2;
 		bloodAmount = initialBlood;
 		goldAmount = initialGold;
 		potionsAmount = initialPotions;
 		charControlScript = player.GetComponent<CharacterControl> ();
+		charAnimator = player.GetComponent<Animator> ();
 		invulDuration = charControlScript.timeInvulInSeconds;
 		timeInvulOver = 0;
 		healthbarImage = healthbar.GetComponent<Image> ();
 		goldText = goldValue.GetComponent<Text> ();
 		potionsText = playerPotionAmount.GetComponent<Text> ();
-		exchangeRateText = exchangeRate.GetComponent<Text> ();
+		buyRateText = buyRate.GetComponent<Text> ();
+		sellRateText = sellRate.GetComponent<Text> ();
 		storePotionText = storePotionAmount.GetComponent<Text> ();
+		potionUIAmountText = potionUIAmount.GetComponent<Text> ();
+		potionDisabled = GameObject.Find ("PotionDisabled").GetComponent<Image> ();
 		updateHealthbar();
 		updateGoldText ();
 		updatePotionStore ();
@@ -99,8 +114,20 @@ public class ResourceLogic : MonoBehaviour {
 
 	void Update()
 	{
-		if (bloodAmount <= 0) {
-			Debug.Log ("Game over, you have died!");
+		if (Input.GetKeyDown(potionHotkey)) {
+			usePotion();
+		}
+
+		if (bloodAmount <= 0 && !playerDead) {
+			//Debug.Log ("Game over, you have died!");
+			charAnimator.SetBool("playerDied", true);
+			timeToMoveOn = Time.time+ 1f;
+			playerDead = true;
+			//Application.LoadLevel(1);
+		}
+
+		if (Time.time > timeToMoveOn)
+		{
 			Application.LoadLevel(1);
 		}
 	}
@@ -147,9 +174,16 @@ public class ResourceLogic : MonoBehaviour {
 
 	public void updatePotionStore()
 	{
-		potionsText.text = "x " + potionsAmount;
-		storePotionText.text = storePotionStock + " stock!";
-		exchangeRateText.text = "= " + getCurrentPotionPrice();
+		potionsText.text = "" + potionsAmount;
+		storePotionText.text = storePotionStock + "";
+		buyRateText.text = "" + getCurrentPotionPrice() + " gold";
+		sellRateText.text = "" + getCurrentPotionPrice() + " gold";
+		potionUIAmountText.text = "" + potionsAmount;
+		if (potionsAmount <= 0) {
+			potionDisabled.fillAmount =1;
+		} else {
+			potionDisabled.fillAmount =0;
+		}
 	}
 
 	public void usePotion()

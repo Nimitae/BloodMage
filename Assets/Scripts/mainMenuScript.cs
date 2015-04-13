@@ -5,7 +5,7 @@ public class mainMenuScript : MonoBehaviour {
 
 	public void startButtonPressed()
 	{
-		Application.LoadLevel (3);
+		Application.LoadLevel (4);
 	}
 
 	public void instructionsButtonPressed()

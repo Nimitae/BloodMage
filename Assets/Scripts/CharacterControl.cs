@@ -15,6 +15,7 @@ public class CharacterControl : MonoBehaviour {
 	private float activeSpeedMultiplier;
 	public bool speedIsIncreased;
 	public float timeDeactivateSpeed;
+	private Animator animator;
 
 	Rigidbody2D rigid;
 	private bool isGrounded = true;
