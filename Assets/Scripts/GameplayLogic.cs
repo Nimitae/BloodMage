@@ -39,10 +39,14 @@ public class GameplayLogic : MonoBehaviour {
 	public GameObject[] skillTwoPanels;
 	public Sprite[] skillTwoSprites;
 	public Button[] skillTwoButtons;
+	public GameObject lifeTapCounter;
+	private Text lifeTapCounterText;
+
 
 
 	// Use this for initialization
 	void Start () {
+		lifeTapCounterText = lifeTapCounter.GetComponent<Text> ();
 		totalWaveEnemies = new float[numWaves];
 		gamePaused = false;
 		currentWave = 0;
@@ -76,6 +80,8 @@ public class GameplayLogic : MonoBehaviour {
 		if (Input.GetKeyUp(pauseKey)){
 			pauseGameButtonPressed();
 		}
+
+		// TODO: End game when waves are complete
 	}
 
 	public void spawnEnemy()
@@ -100,6 +106,7 @@ public class GameplayLogic : MonoBehaviour {
 	public void enemyDeath(){
 		currentAliveEnemies--;
 		QWERSpell.enemiesKilledSinceLastSpell++;
+		updateLifeTapCounter ();
 	}
 
 	public void pauseGameButtonPressed()
@@ -260,5 +267,10 @@ public class GameplayLogic : MonoBehaviour {
 	public void deactivateSkillTwoPanel(int panelIndex)
 	{
 		skillTwoPanels [panelIndex].SetActive (false);
+	}
+
+	public void updateLifeTapCounter()
+	{
+		lifeTapCounterText.text = "" + QWERSpell.enemiesKilledSinceLastSpell;
 	}
 }

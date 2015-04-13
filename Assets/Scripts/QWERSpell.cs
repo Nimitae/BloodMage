@@ -13,16 +13,21 @@ public class QWERSpell : MonoBehaviour {
 	public float fourthSpeedIncrease;
 	public float fourthSpeedDuration;
 	public float firstSkillKillRequirement;
+	public float[] lifeTapBloodGain;
+	public static int enemiesKilledSinceLastSpell;
 
-	public static float enemiesKilledSinceLastSpell;
 	private Image cooldownImage;
 	private float nextAvailableSpellTime;
 	private ResourceLogic resLogic;
 	private CharacterControl charControl;
 
+	public GameObject lifeTapCounter;
+	private Text lifeTapCounterText;
+
 	// Use this for initialization
 	void Start () {
 		nextAvailableSpellTime = 0;
+		lifeTapCounterText = lifeTapCounter.GetComponent<Text> ();
 		resLogic = GameObject.Find ("GameManager").GetComponent<ResourceLogic> ();
 		charControl = GameObject.Find ("character").GetComponent<CharacterControl> ();
 		cooldownImage = GameObject.Find ("LifeTapCooldown").GetComponent<Image> ();
@@ -53,9 +58,16 @@ public class QWERSpell : MonoBehaviour {
 	}
 
 	public void executeFirstSpell(){
-		resLogic.spendGoldOnBlood(0, firstFlatBloodGain);
+		if (enemiesKilledSinceLastSpell <= lifeTapBloodGain.Length) {
+			resLogic.spendGoldOnBlood (0, lifeTapBloodGain [enemiesKilledSinceLastSpell]);
+			print ("Lifetap" + enemiesKilledSinceLastSpell);
+		} else {
+			resLogic.spendGoldOnBlood (0, lifeTapBloodGain [lifeTapBloodGain.Length-1]);
+			print ("Lifetap" + enemiesKilledSinceLastSpell);
+		}
 		nextAvailableSpellTime = Time.time + sharedSpellCooldown;
-		enemiesKilledSinceLastSpell = 0;
+		QWERSpell.enemiesKilledSinceLastSpell = 0;
+		updateLifeTapCounter ();
 	}
 
 	public void executeSecondSpell()
@@ -75,4 +87,10 @@ public class QWERSpell : MonoBehaviour {
 		charControl.increaseMoveSpeedForDuration(fourthSpeedIncrease, fourthSpeedDuration);
 		nextAvailableSpellTime = Time.time + sharedSpellCooldown;
 	}
+
+	public void updateLifeTapCounter()
+	{
+		lifeTapCounterText.text = "" + QWERSpell.enemiesKilledSinceLastSpell;
+	}
+
 }

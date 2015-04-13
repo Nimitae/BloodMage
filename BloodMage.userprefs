@@ -1,9 +1,11 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\RangedEnemyAI.cs">
+  <MonoDevelop.Ide.Workspace />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\SpellTwo.cs">
     <Files>
-      <File FileName="Assets\Scripts\RangedEnemyAI.cs" Line="117" Column="3" />
-      <File FileName="Assets\Scripts\WalkingEnemyAI.cs" Line="84" Column="4" />
+      <File FileName="Assets\Scripts\GameplayLogic.cs" Line="109" Column="27" />
+      <File FileName="Assets\Scripts\QWERSpell.cs" Line="97" Column="1" />
+      <File FileName="Assets\rangedEnemyAttack.cs" Line="29" Column="1" />
+      <File FileName="Assets\Scripts\SpellTwo.cs" Line="125" Column="53" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

@@ -71,14 +71,13 @@ public class SpellTwo : MonoBehaviour {
 	} 
 	
 	public void castSingleTap()
-	{print ("single");
+	{
 		castSpellLevel (singleTapIndex);
 		singleTapSpellNextAvailableTime = Time.time + cooldown [singleTapIndex];
 	}
 	
 	public void castDoubleTap()
 	{
-		print ("double");
 		castSpellLevel (doubleTapIndex);
 		doubleTapSpellNextAvailableTime = Time.time + cooldown [doubleTapIndex];
 	}
@@ -106,21 +105,25 @@ public class SpellTwo : MonoBehaviour {
 			script.projectileForce = projectileForce [index];
 		} else if (index == 5 || index == 6) {
 			Vector3 projectilePosition = new Vector3 (xPosition, transform.position.y + 0.1f, 0);
-			Quaternion adjustmentQuat1 = Quaternion.Euler(0,0,5);
-			Quaternion adjustmentQuat2 = Quaternion.Euler(0,0,-5);
+	//		Quaternion adjustmentQuat1 = Quaternion.Euler(0,0,5);
+	//		Quaternion adjustmentQuat2 = Quaternion.Euler(0,0,-5);
 			Transform newProjectile = (Transform)Instantiate (spellTwoTransform [index], projectilePosition, Quaternion.identity * rotationQuart);
 			SpellTwoProjectile script = newProjectile.GetComponent<SpellTwoProjectile> (); 
 			script.projectileDamage = spellDamagePerBullet [index];
 			script.projectileSpeed = projectileSpeed [index];
 			script.penetrationLimit = penetrationLimit [index];
 			script.projectileForce = projectileForce [index];
-			 newProjectile = (Transform)Instantiate (spellTwoTransform [index], projectilePosition, Quaternion.identity * rotationQuart * adjustmentQuat1);
+
+			projectilePosition = new Vector3 (xPosition - 0.2f, transform.position.y - 0.1f, 0);
+			 newProjectile = (Transform)Instantiate (spellTwoTransform [index], projectilePosition, Quaternion.identity * rotationQuart );
 			 script = newProjectile.GetComponent<SpellTwoProjectile> (); 
 			script.projectileDamage = spellDamagePerBullet [index];
 			script.projectileSpeed = projectileSpeed [index];
 			script.penetrationLimit = penetrationLimit [index];
 			script.projectileForce = projectileForce [index];
-			 newProjectile = (Transform)Instantiate (spellTwoTransform [index], projectilePosition, Quaternion.identity * rotationQuart * adjustmentQuat2);
+
+			projectilePosition = new Vector3 (xPosition - 0.4f, transform.position.y + 0.3f, 0);
+			 newProjectile = (Transform)Instantiate (spellTwoTransform [index], projectilePosition, Quaternion.identity * rotationQuart );
 			 script = newProjectile.GetComponent<SpellTwoProjectile> (); 
 			script.projectileDamage = spellDamagePerBullet [index];
 			script.projectileSpeed = projectileSpeed [index];
