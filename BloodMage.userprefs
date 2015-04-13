@@ -1,8 +1,9 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\RangedEnemyAI.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\RangedEnemyAI.cs">
     <Files>
-      <File FileName="Assets\RangedEnemyAI.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\RangedEnemyAI.cs" Line="117" Column="3" />
+      <File FileName="Assets\Scripts\WalkingEnemyAI.cs" Line="84" Column="4" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

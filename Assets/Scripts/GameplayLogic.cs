@@ -26,7 +26,8 @@ public class GameplayLogic : MonoBehaviour {
 	private float currentAliveEnemies;
 	public int currentWave;
 	private float enemiesSpawned;
-	public float minimumSpawnTime;
+	public float[] minimumSpawnTime;
+	public float[] maximumEnemiesPerSpawn;
 	private float nextPossibleSpawnTime;
 
 	private float[] totalWaveEnemies;
@@ -50,7 +51,7 @@ public class GameplayLogic : MonoBehaviour {
 		resLogic = GameObject.Find ("GameManager").GetComponent<ResourceLogic> ();
 		initialiseSkillTree ();
 		float totalEnemiesInWave;
-		for (int i = 0; i < numWaves-1; i++) {
+		for (int i = 0; i < numWaves; i++) {
 			totalEnemiesInWave = 0;
 			for (int j = 0; j < numEnemyTypes; j++)
 			{
@@ -65,7 +66,7 @@ public class GameplayLogic : MonoBehaviour {
 			spawnEnemy ();
 		}
 
-		if (enemiesSpawned == totalWaveEnemies [currentWave] && currentAliveEnemies == 0 && currentWave < numWaves-1) {
+		if (enemiesSpawned == totalWaveEnemies [currentWave] && currentAliveEnemies == 0 && currentWave < numWaves) {
 			currentWave++;
 			resLogic.increasePotionStockByWave();
 			nextPossibleSpawnTime = 0;
@@ -79,17 +80,21 @@ public class GameplayLogic : MonoBehaviour {
 
 	public void spawnEnemy()
 	{
-		int spawnPoint = Random.Range (0, 4);
-		int enemyType = Random.Range (0, numEnemyTypes);
-		while (waveEnemies[currentWave].floatArray[enemyType]  <= 0) {
-			enemyType = Random.Range (0, numEnemyTypes);
+		int numToSpawn = Random.Range (1, (int) maximumEnemiesPerSpawn[currentWave]);
+		numToSpawn = Mathf.Min (numToSpawn, (int)(totalWaveEnemies [currentWave] - enemiesSpawned));
+		for (int i = 0; i < numToSpawn; i++) {
+			int spawnPoint = Random.Range (0, 4);
+			int enemyType = Random.Range (0, numEnemyTypes);
+			while (waveEnemies[currentWave].floatArray[enemyType]  <= 0) {
+				enemyType = Random.Range (0, numEnemyTypes);
+			}
+			waveEnemies [currentWave].floatArray [enemyType] -= 1;
+			Transform newEnemy = (Transform)Instantiate (enemyPrefabs [enemyType], spawnPoints [spawnPoint], Quaternion.identity);
+			newEnemy.GetComponent<IEnemyAI> ().setPlayer (player);
+			enemiesSpawned++;
+			currentAliveEnemies++;
 		}
-		waveEnemies [currentWave].floatArray [enemyType] -= 1;
-		Transform newEnemy = (Transform) Instantiate (enemyPrefabs[enemyType], spawnPoints [spawnPoint], Quaternion.identity);
-		newEnemy.GetComponent<IEnemyAI> ().setPlayer (player);
-		enemiesSpawned++;
-		currentAliveEnemies++;
-		nextPossibleSpawnTime = Time.time + minimumSpawnTime;
+		nextPossibleSpawnTime = Time.time + minimumSpawnTime[currentWave];
 	}
 
 	public void enemyDeath(){
