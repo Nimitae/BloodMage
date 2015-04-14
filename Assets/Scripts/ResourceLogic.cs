@@ -166,18 +166,24 @@ public class ResourceLogic : MonoBehaviour {
 		updatePotionStore ();
 	}
 
-	public float getCurrentPotionPrice()
+	public float getBuyPotionPrice()
 	{
-		//return Mathf.Round(potionBaseCost * Mathf.Exp(-1 * potionExponentialDecay * storePotionStock));
-		return potionBaseCost;
+		return Mathf.Round(potionBaseCost * Mathf.Exp(-1 * potionExponentialDecay * storePotionStock));
+		//return potionBaseCost;
+	}
+
+	public float getSellPotionPrice()
+	{
+		return Mathf.Round(potionBaseCost * Mathf.Exp(-1 * potionExponentialDecay * (storePotionStock+1)));
+		//return potionBaseCost;
 	}
 
 	public void updatePotionStore()
 	{
 		potionsText.text = "" + potionsAmount;
 		storePotionText.text = storePotionStock + "";
-		buyRateText.text = "" + getCurrentPotionPrice() + " gold";
-		sellRateText.text = "" + getCurrentPotionPrice() + " gold";
+		buyRateText.text = "" + getBuyPotionPrice() + " gold";
+		sellRateText.text = "" + getSellPotionPrice() + " gold";
 		potionUIAmountText.text = "" + potionsAmount;
 		if (potionsAmount <= 0) {
 			potionDisabled.fillAmount =1;
@@ -198,7 +204,7 @@ public class ResourceLogic : MonoBehaviour {
 
 	public void buyPotionFromShop()
 	{
-		float currentPrice = getCurrentPotionPrice ();
+		float currentPrice = getBuyPotionPrice ();
 		if (goldAmount >= currentPrice && storePotionStock > 0) {
 			storePotionStock -= 1;
 			potionsAmount += 1;
@@ -210,7 +216,7 @@ public class ResourceLogic : MonoBehaviour {
 
 	public void sellPotionToShop()
 	{
-		float currentPrice = getCurrentPotionPrice ();
+		float currentPrice = getSellPotionPrice ();
 		if (potionsAmount > 0) {
 			storePotionStock += 1;
 			potionsAmount -= 1;

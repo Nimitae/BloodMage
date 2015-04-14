@@ -108,6 +108,12 @@ public class RangedEnemyAI: MonoBehaviour, IEnemyAI {
 			dir *= speed * Time.fixedDeltaTime;
 			rigid.AddForce (dir, fMode);
 		}
+
+		if (player.position.x - transform.position.x > 0) {
+			transform.rotation = new Quaternion(0,1,0,0);
+		} else {
+			transform.rotation = new Quaternion(0,0,0,0);
+		}
 	}
 	
 	public void setPlayer(Transform playerTransform)

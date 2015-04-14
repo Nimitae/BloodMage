@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: a57a1d699c0987b4288af29812898553
-timeCreated: 1427884305
+timeCreated: 1428981977
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -54,8 +54,8 @@ TextureImporter:
     - name: monster-range_0
       rect:
         serializedVersion: 2
-        x: 30
-        y: 39
+        x: 86
+        y: 86
         width: 426
         height: 300
       alignment: 0
@@ -64,8 +64,8 @@ TextureImporter:
     - name: monster-range_1
       rect:
         serializedVersion: 2
-        x: 519
-        y: 39
+        x: 575
+        y: 86
         width: 431
         height: 301
       alignment: 0

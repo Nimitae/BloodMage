@@ -75,12 +75,18 @@ public class WalkingEnemyAI : MonoBehaviour, IEnemyAI {
 		pathIsEnded = false;
 		Vector3 dir = (path.vectorPath [currentWaypoint] - transform.position).normalized;
 		float angle = Mathf.Rad2Deg*Mathf.Atan (Mathf.Abs(dir.y / dir.x));
+
 		if (angle > 80 && dir.y > 0 && isGrounded) {
 			rigid.AddForce (new Vector2 (0, jumpForce));
 			isGrounded = false;
 		} else {
 			dir *= speed * Time.fixedDeltaTime;
 			rigid.AddForce (dir, fMode);
+			if (rigid.velocity.x > 0) {
+				transform.rotation = new Quaternion(0,1,0,0);
+			} else {
+				transform.rotation = new Quaternion(0,0,0,0);
+			}
 		}
 		float dist = Vector3.Distance (transform.position, path.vectorPath [currentWaypoint]);
 		if (dist < nextWaypointDistance)
