@@ -128,7 +128,7 @@ public class ResourceLogic : MonoBehaviour {
 
 		if (Time.time > timeToMoveOn)
 		{
-			Application.LoadLevel(1);
+			Application.LoadLevel(3);
 		}
 	}
 

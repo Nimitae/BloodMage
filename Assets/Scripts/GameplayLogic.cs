@@ -116,6 +116,8 @@ public class GameplayLogic : MonoBehaviour {
 			pauseCanvas.SetActive( false);
 			Time.timeScale = 1;
 		} else {
+			updateSkillTree(skillOneUnlocks, skillOnePanels, skillOneButtons, skillOneSprites);
+			updateSkillTree(skillTwoUnlocks, skillTwoPanels, skillTwoButtons, skillTwoSprites);
 			gamePaused = true;
 			pauseCanvas.SetActive (true);
 			Time.timeScale = 0;

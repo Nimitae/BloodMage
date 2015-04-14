@@ -48,13 +48,13 @@ public class QWERSpell : MonoBehaviour {
 		if (Time.time >= nextAvailableSpellTime) {
 			if (Input.GetKey(firstSpell) && enemiesKilledSinceLastSpell >= firstSkillKillRequirement){
 				executeFirstSpell();
-			} else if (Input.GetKey(secondSpell)){
+			} /*else if (Input.GetKey(secondSpell)){
 				executeSecondSpell();
 			} else if (Input.GetKey(thirdSpell)){
 				executeThirdSpell();
 			} else if (Input.GetKey(fourthSpell)){
 				executeFourthSpell();
-			}
+			}*/
 		}
 
 		if (enemiesKilledSinceLastSpell < firstSkillKillRequirement) {
@@ -69,11 +69,9 @@ public class QWERSpell : MonoBehaviour {
 
 	public void executeFirstSpell(){
 		if (enemiesKilledSinceLastSpell <= lifeTapBloodGain.Length) {
-			resLogic.spendGoldOnBlood (0, lifeTapBloodGain [enemiesKilledSinceLastSpell]);
-			print ("Lifetap" + enemiesKilledSinceLastSpell);
+			resLogic.spendGoldOnBlood (0, lifeTapBloodGain [enemiesKilledSinceLastSpell-1]);
 		} else {
 			resLogic.spendGoldOnBlood (0, lifeTapBloodGain [lifeTapBloodGain.Length-1]);
-			print ("Lifetap" + enemiesKilledSinceLastSpell);
 		}
 		nextAvailableSpellTime = Time.time + sharedSpellCooldown;
 		QWERSpell.enemiesKilledSinceLastSpell = 0;
