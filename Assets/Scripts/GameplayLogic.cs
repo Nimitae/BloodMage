@@ -34,18 +34,25 @@ public class GameplayLogic : MonoBehaviour {
 	private bool[] skillOneUnlocks;
 	public GameObject[] skillOnePanels;
 	public Sprite[] skillOneSprites;
-	public Button[] skillOneButtons;
+	public GameObject[] skillOneButtons;
 	private bool[] skillTwoUnlocks;
 	public GameObject[] skillTwoPanels;
 	public Sprite[] skillTwoSprites;
-	public Button[] skillTwoButtons;
+	public GameObject[] skillTwoButtons;
 	public GameObject lifeTapCounter;
 	private Text lifeTapCounterText;
-
-
-
+	public GameObject skillOneIcon;
+	public GameObject skillTwoIcon;
+	private Image skillOneIconImage;
+	private Image skillOneCooldownImage;
+	private Image skillTwoIconImage;
+	private Image skillTwoCooldownImage;
 	// Use this for initialization
 	void Start () {
+		skillOneIconImage = skillOneIcon.GetComponent<Image>();
+		skillOneCooldownImage = skillOneIcon.transform.GetChild(0).GetComponent<Image>();
+		skillTwoIconImage = skillTwoIcon.GetComponent<Image>();
+		skillTwoCooldownImage = skillTwoIcon.transform.GetChild(0).GetComponent<Image>();
 		lifeTapCounterText = lifeTapCounter.GetComponent<Text> ();
 		totalWaveEnemies = new float[numWaves];
 		gamePaused = false;
@@ -130,7 +137,14 @@ public class GameplayLogic : MonoBehaviour {
 			resLogic.spendGoldOnSkillTree(skillTreeTierCosts [skillTier]);
 			skillOneUnlocks[skillTier] = true;
 			updateSkillTree(skillOneUnlocks, skillOnePanels, skillOneButtons, skillOneSprites);
+			updateSkillTree(skillTwoUnlocks, skillTwoPanels, skillTwoButtons, skillTwoSprites);
 			skillOnePanels[skillTier].SetActive(false);
+			skillOneIconImage.sprite = skillOneSprites[skillTier];
+			if (skillTier != 3 && skillTier != 4) {
+				skillOneCooldownImage.sprite = skillOneSprites[0];
+			} else {
+				skillOneCooldownImage.sprite = skillOneSprites[7];
+			}
 		}
 	}
 
@@ -139,8 +153,15 @@ public class GameplayLogic : MonoBehaviour {
 		if (ResourceLogic.goldAmount >= skillTreeTierCosts [skillTier]) {
 			resLogic.spendGoldOnSkillTree(skillTreeTierCosts [skillTier]);
 			skillTwoUnlocks[skillTier] = true;
+			updateSkillTree(skillOneUnlocks, skillOnePanels, skillOneButtons, skillOneSprites);
 			updateSkillTree(skillTwoUnlocks, skillTwoPanels, skillTwoButtons, skillTwoSprites);
 			skillTwoPanels[skillTier].SetActive(false);
+			skillTwoIconImage.sprite = skillTwoSprites[skillTier];
+			if (skillTier != 5 && skillTier != 6) {
+				skillTwoCooldownImage.sprite = skillTwoSprites[0];
+			} else {
+				skillTwoCooldownImage.sprite = skillTwoSprites[7];
+			}
 		}
 	}
 
@@ -158,7 +179,7 @@ public class GameplayLogic : MonoBehaviour {
 	//	updateSkillTree (skillTwoUnlocks, skillTwoPanels);
 	}
 
-	private void updateSkillTree(bool[] skillUnlocksArray, GameObject[] skillPanelsArray, Button[] buttonArray, Sprite[] spritesArray)
+	private void updateSkillTree(bool[] skillUnlocksArray, GameObject[] skillPanelsArray, GameObject[] buttonArray, Sprite[] spritesArray)
 	{
 		int[] activeButtons = new int[7];
 		if (skillUnlocksArray [1]) {
@@ -240,13 +261,13 @@ public class GameplayLogic : MonoBehaviour {
 
 		for (int i = 1; i < 7; i++) {
 			if (activeButtons[i] == 1){
-				buttonArray[i].image.sprite = spritesArray[i];
+				buttonArray[i].transform.GetChild(0).gameObject.SetActive(false);
 			} else if (activeButtons[i] == 2){
-				buttonArray[i].image.sprite = spritesArray[0];
+				buttonArray[i].transform.GetChild(0).gameObject.SetActive(true);
 			} else if (activeButtons[i] == 3){
-				buttonArray[i].image.sprite = spritesArray[i];
+				buttonArray[i].transform.GetChild(0).gameObject.SetActive(false);
 			} else {
-				buttonArray[i].image.sprite = spritesArray[7];
+				buttonArray[i].transform.GetChild(0).gameObject.SetActive(true);
 			}
 		}
 	}

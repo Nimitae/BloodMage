@@ -15,6 +15,7 @@ public class QWERSpell : MonoBehaviour {
 	public float firstSkillKillRequirement;
 	public float[] lifeTapBloodGain;
 	public static int enemiesKilledSinceLastSpell;
+	public AudioClip lifetapAudio;
 
 	private Image cooldownImage;
 	private float nextAvailableSpellTime;
@@ -79,6 +80,7 @@ public class QWERSpell : MonoBehaviour {
 		animator.SetBool ("castedLifeTap", true);
 		lifeTapActive = true;
 		lifeTapDeactivateTime = Time.time + 0.3f;
+		AudioSource.PlayClipAtPoint(lifetapAudio, transform.position);
 	}
 
 	public void executeSecondSpell()
