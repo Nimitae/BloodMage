@@ -13,10 +13,10 @@ public class SpellOneShockwave : MonoBehaviour {
 		Quaternion rotationQuart;
 		if (transform.rotation.z == 1){
 			rotationQuart = new Quaternion(0,1,0,0);
-			xPosition -= 0.2f;
+			xPosition -= 0.5f;
 		} else {
 			rotationQuart = new Quaternion(0,0,0,0);
-			xPosition += 0.2f;
+			xPosition += 0.5f;
 		}
 		Vector3 shockwavePos = new Vector3(xPosition, transform.position.y,0);
 		Transform newProjectile =(Transform) Instantiate(shockwave,shockwavePos,Quaternion.identity * rotationQuart);
@@ -33,10 +33,10 @@ public class SpellOneShockwave : MonoBehaviour {
 		Quaternion rotationQuart;
 		if (transform.rotation.z == 1){
 			rotationQuart = new Quaternion(0,0,0,0);
-			xPosition -= 0.2f;
+			xPosition += 0.1f;
 		} else {
 			rotationQuart = new Quaternion(0,1,0,0);
-			xPosition += 0.2f;
+			xPosition -= 0.1f;
 		}
 		Vector3 shockwavePos = new Vector3(xPosition, transform.position.y,0);
 		Transform newProjectile =(Transform) Instantiate(shockwave,shockwavePos,Quaternion.identity * rotationQuart);
